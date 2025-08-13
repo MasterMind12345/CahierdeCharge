@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord Technique - SecureDeal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony (Slate, White, Blue/Indigo) -->
+    <!-- Application Structure Plan: A single-page dashboard with a top navigation bar for quick scrolling. The structure is thematic, breaking down the technical specs into logical, digestible sections: 1. Global Architecture (visual diagram), 2. Tech Stack (interactive tabs for Frontend/Backend/DB), 3. Key User Flow (step-by-step visual), 4. API & Security (clear lists), and 5. Performance Metrics (charts). This structure was chosen over a linear document to allow stakeholders (technical or not) to quickly access the information most relevant to them, promoting better understanding and engagement with the technical plan. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Client-Server Model -> Goal: Organize -> Viz: HTML/CSS Diagram -> Interaction: Static Visual -> Justification: Provides a clear, high-level overview of the system's components and their relationships. -> Library/Method: Tailwind CSS Flexbox/Grid.
+        - Report Info: Tech Stacks (Android, iOS, Web, Backend) -> Goal: Compare/Inform -> Viz: Tabbed Interface -> Interaction: Clickable tabs to reveal content -> Justification: Prevents information overload by showing only one stack at a time, making comparison easier. -> Library/Method: Vanilla JS.
+        - Report Info: Contract Creation Process -> Goal: Change/Process -> Viz: Numbered Step-by-Step Flowchart -> Interaction: Static visual flow -> Justification: Simplifies a complex process into a clear, sequential visual narrative. -> Library/Method: HTML/Tailwind CSS.
+        - Report Info: Performance Metrics (Availability, Latency, Scalability) -> Goal: Inform -> Viz: Donut & Bar Charts -> Interaction: Hover tooltips -> Justification: Quantifiable goals are more impactful and easier to grasp as charts than as text. -> Library/Method: Chart.js.
+        - Report Info: API Endpoints -> Goal: Organize -> Viz: Styled Table -> Interaction: Static -> Justification: A structured table is the clearest way to present list-based data like API routes. -> Library/Method: HTML/Tailwind CSS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 300px;
+            width: 100%;
+            max-width: 400px;
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link:hover {
+            color: #4f46e5; /* indigo-600 */
+        }
+        .nav-link.active {
+            color: #4f46e5; /* indigo-600 */
+            border-bottom-color: #4f46e5;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-xl font-bold text-indigo-600">SecureDeal</h1>
+                    <p class="text-sm text-slate-500">Tableau de Bord Technique</p>
+                </div>
+                <nav class="hidden md:flex md:space-x-8">
+                    <a href="#architecture" class="nav-link text-slate-600 font-medium border-b-2 border-transparent pb-1">Architecture</a>
+                    <a href="#stack" class="nav-link text-slate-600 font-medium border-b-2 border-transparent pb-1">Stack Technique</a>
+                    <a href="#flow" class="nav-link text-slate-600 font-medium border-b-2 border-transparent pb-1">Flux Utilisateur</a>
+                    <a href="#api" class="nav-link text-slate-600 font-medium border-b-2 border-transparent pb-1">API & Sécurité</a>
+                    <a href="#performance" class="nav-link text-slate-600 font-medium border-b-2 border-transparent pb-1">Performance</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Section: Architecture -->
+        <section id="architecture" class="mb-20 scroll-mt-24">
+            <h2 class="text-3xl font-bold mb-2 text-center">Architecture Globale</h2>
+            <p class="text-center text-slate-600 max-w-3xl mx-auto mb-12">
+                SecureDeal est basé sur une architecture client-serveur robuste. Plusieurs applications clientes communiquent avec une API centrale qui orchestre la logique métier, l'accès à la base de données et les services externes. Cette approche garantit une séparation claire des responsabilités et une grande flexibilité.
+            </p>
+            <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                <div class="flex flex-col md:flex-row justify-around items-center gap-8">
+                    <!-- Clients -->
+                    <div class="flex flex-col items-center gap-4">
+                        <h3 class="font-semibold text-lg">Clients Utilisateurs</h3>
+                        <div class="flex gap-4">
+                            <div class="w-24 h-24 bg-slate-100 rounded-lg flex flex-col items-center justify-center text-center p-2 shadow">
+                                <span class="text-3xl">📱</span>
+                                <span class="text-xs font-semibold mt-1">Android (Java)</span>
+                            </div>
+                            <div class="w-24 h-24 bg-slate-100 rounded-lg flex flex-col items-center justify-center text-center p-2 shadow">
+                                <span class="text-3xl">📱</span>
+                                <span class="text-xs font-semibold mt-1">iOS (Swift)</span>
+                            </div>
+                            <div class="w-24 h-24 bg-slate-100 rounded-lg flex flex-col items-center justify-center text-center p-2 shadow">
+                                <span class="text-3xl">💻</span>
+                                <span class="text-xs font-semibold mt-1">Web (React)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="text-4xl text-indigo-500 font-mono transform md:-rotate-0 rotate-90">&lt;--&gt;</div>
+
+                    <!-- Backend -->
+                    <div class="flex flex-col items-center gap-4">
+                        <h3 class="font-semibold text-lg">Backend</h3>
+                        <div class="w-48 h-32 bg-indigo-100 rounded-lg flex flex-col items-center justify-center p-4 text-center shadow-inner">
+                            <span class="text-3xl">⚙️</span>
+                            <span class="font-semibold text-indigo-800">API REST</span>
+                            <span class="text-xs text-indigo-600">(Node.js ou Python)</span>
+                        </div>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="text-4xl text-indigo-500 font-mono transform md:-rotate-0 rotate-90">&lt;--&gt;</div>
+
+                    <!-- Database & Services -->
+                    <div class="flex flex-col items-center gap-4">
+                        <h3 class="font-semibold text-lg">Données & Services</h3>
+                        <div class="flex flex-col gap-2">
+                            <div class="w-48 h-16 bg-slate-100 rounded-lg flex items-center justify-center p-2 shadow">
+                                <span class="text-2xl mr-3">🗄️</span>
+                                <span class="font-semibold">PostgreSQL</span>
+                            </div>
+                             <div class="w-48 h-16 bg-slate-100 rounded-lg flex items-center justify-center p-2 shadow">
+                                <span class="text-2xl mr-3">💳</span>
+                                <span class="font-semibold">APIs de Paiement</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Tech Stack -->
+        <section id="stack" class="mb-20 scroll-mt-24">
+            <h2 class="text-3xl font-bold mb-2 text-center">Stack Technique</h2>
+            <p class="text-center text-slate-600 max-w-3xl mx-auto mb-12">
+                Chaque composant de notre architecture utilise des technologies modernes et éprouvées pour garantir performance, sécurité et maintenabilité. Explorez les différents volets de notre stack technique en cliquant sur les onglets ci-dessous.
+            </p>
+            <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                <div class="flex justify-center border-b border-slate-200 mb-8">
+                    <button data-tab="frontend" class="tab-btn px-6 py-3 font-medium text-indigo-600 border-b-2 border-indigo-600">Frontend</button>
+                    <button data-tab="backend" class="tab-btn px-6 py-3 font-medium text-slate-500 border-b-2 border-transparent">Backend</button>
+                    <button data-tab="database" class="tab-btn px-6 py-3 font-medium text-slate-500 border-b-2 border-transparent">Base de Données</button>
+                </div>
+                <div id="tab-content">
+                    <!-- Frontend Content -->
+                    <div data-content="frontend">
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="bg-slate-50 p-6 rounded-lg border">
+                                <h4 class="font-bold text-lg mb-3">📱 Android</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li><strong class="text-indigo-700">Langage:</strong> Java</li>
+                                    <li><strong class="text-indigo-700">UI:</strong> Android SDK (XML/Compose)</li>
+                                    <li><strong class="text-indigo-700">Réseau:</strong> Retrofit</li>
+                                    <li><strong class="text-indigo-700">État:</strong> ViewModel</li>
+                                    <li><strong class="text-indigo-700">Notifications:</strong> Firebase (FCM)</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-50 p-6 rounded-lg border">
+                                <h4 class="font-bold text-lg mb-3">📱 iOS</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li><strong class="text-indigo-700">Langage:</strong> Swift</li>
+                                    <li><strong class="text-indigo-700">UI:</strong> SwiftUI / UIKit</li>
+                                    <li><strong class="text-indigo-700">Réseau:</strong> Alamofire</li>
+                                    <li><strong class="text-indigo-700">Notifications:</strong> APNs / FCM</li>
+                                </ul>
+                            </div>
+                             <div class="bg-slate-50 p-6 rounded-lg border">
+                                <h4 class="font-bold text-lg mb-3">💻 Web</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li><strong class="text-indigo-700">Framework:</strong> React.js</li>
+                                    <li><strong class="text-indigo-700">Style:</strong> Tailwind CSS</li>
+                                    <li><strong class="text-indigo-700">Réseau:</strong> Fetch API / Axios</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Backend Content -->
+                    <div data-content="backend" class="hidden">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="bg-slate-50 p-6 rounded-lg border">
+                                <h4 class="font-bold text-lg mb-3">⚙️ Serveur & API</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li><strong class="text-indigo-700">Langage:</strong> Python ou Node.js</li>
+                                    <li><strong class="text-indigo-700">Framework:</strong> Django ou Express.js</li>
+                                    <li><strong class="text-indigo-700">Authentification:</strong> JWT</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-50 p-6 rounded-lg border">
+                                <h4 class="font-bold text-lg mb-3">☁️ Hébergement & Services</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li><strong class="text-indigo-700">Plateforme:</strong> AWS / Azure</li>
+                                    <li><strong class="text-indigo-700">Notifications SMS:</strong> API Externe</li>
+                                    <li><strong class="text-indigo-700">Paiements:</strong> API MTN & Orange</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Database Content -->
+                    <div data-content="database" class="hidden">
+                        <div class="bg-slate-50 p-6 rounded-lg border max-w-md mx-auto">
+                            <h4 class="font-bold text-lg mb-3">🗄️ Système de Gestion de Base de Données</h4>
+                            <ul class="space-y-2 text-sm">
+                                <li><strong class="text-indigo-700">Système:</strong> PostgreSQL</li>
+                                <li><strong class="text-indigo-700">Accès:</strong> via ORM (Django ORM, Sequelize)</li>
+                                <li><strong class="text-indigo-700">Focus:</strong> Fiabilité, performance et intégrité des données transactionnelles.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section: User Flow -->
+        <section id="flow" class="mb-20 scroll-mt-24">
+            <h2 class="text-3xl font-bold mb-2 text-center">Flux Utilisateur Clé : Création d'un Contrat</h2>
+            <p class="text-center text-slate-600 max-w-3xl mx-auto mb-12">
+                Pour illustrer le fonctionnement de l'application, voici le déroulement étape par étape de la création d'un contrat sécurisé, de l'initiative de l'acheteur à la notification du vendeur.
+            </p>
+            <div class="relative flex flex-col items-center">
+                <!-- Steps -->
+                <div class="w-full max-w-4xl">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
+                        <!-- Step 1 -->
+                        <div class="flex flex-col items-center text-center w-48">
+                            <div class="w-16 h-16 rounded-full bg-indigo-600 text-white flex items-center justify-center text-2xl font-bold mb-2">1</div>
+                            <h4 class="font-semibold">Création</h4>
+                            <p class="text-sm text-slate-500">L'acheteur remplit les détails du contrat sur l'application.</p>
+                        </div>
+                        <!-- Arrow -->
+                        <div class="flex-grow h-1 w-full md:w-auto bg-slate-300 hidden md:block"></div>
+                        <div class="w-1 h-8 md:h-1 bg-slate-300 md:hidden"></div>
+                        <!-- Step 2 -->
+                        <div class="flex flex-col items-center text-center w-48">
+                            <div class="w-16 h-16 rounded-full bg-indigo-600 text-white flex items-center justify-center text-2xl font-bold mb-2">2</div>
+                            <h4 class="font-semibold">Dépôt</h4>
+                            <p class="text-sm text-slate-500">L'acheteur dépose les fonds via Mobile Money. L'API de paiement confirme.</p>
+                        </div>
+                        <!-- Arrow -->
+                        <div class="flex-grow h-1 w-full md:w-auto bg-slate-300 hidden md:block"></div>
+                        <div class="w-1 h-8 md:h-1 bg-slate-300 md:hidden"></div>
+                        <!-- Step 3 -->
+                        <div class="flex flex-col items-center text-center w-48">
+                            <div class="w-16 h-16 rounded-full bg-indigo-600 text-white flex items-center justify-center text-2xl font-bold mb-2">3</div>
+                            <h4 class="font-semibold">Séquestre</h4>
+                            <p class="text-sm text-slate-500">L'API SecureDeal enregistre la transaction et place les fonds en séquestre.</p>
+                        </div>
+                        <!-- Arrow -->
+                        <div class="flex-grow h-1 w-full md:w-auto bg-slate-300 hidden md:block"></div>
+                        <div class="w-1 h-8 md:h-1 bg-slate-300 md:hidden"></div>
+                        <!-- Step 4 -->
+                        <div class="flex flex-col items-center text-center w-48">
+                            <div class="w-16 h-16 rounded-full bg-indigo-600 text-white flex items-center justify-center text-2xl font-bold mb-2">4</div>
+                            <h4 class="font-semibold">Notification</h4>
+                            <p class="text-sm text-slate-500">Le vendeur reçoit une notification Push/SMS que les fonds sont sécurisés.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: API & Security -->
+        <section id="api" class="mb-20 scroll-mt-24">
+            <h2 class="text-3xl font-bold mb-2 text-center">API & Sécurité</h2>
+            <p class="text-center text-slate-600 max-w-3xl mx-auto mb-12">
+                La sécurité est notre priorité absolue. L'API est conçue avec des points d'accès clairs et protégée par plusieurs couches de sécurité pour garantir l'intégrité et la confidentialité des transactions.
+            </p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- API Endpoints -->
+                <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                    <h3 class="font-bold text-xl mb-4">Endpoints API Principaux</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-slate-100 text-slate-600">
+                                <tr>
+                                    <th class="p-3 font-semibold">Route</th>
+                                    <th class="p-3 font-semibold">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b"><td class="p-3 font-mono">/auth/login</td><td class="p-3">Connexion & génération de token JWT</td></tr>
+                                <tr class="border-b"><td class="p-3 font-mono">/contracts</td><td class="p-3">Créer et lister les contrats</td></tr>
+                                <tr class="border-b"><td class="p-3 font-mono">/contracts/{id}/deposit</td><td class="p-3">Initier le dépôt de fonds</td></tr>
+                                <tr class="border-b"><td class="p-3 font-mono">/contracts/{id}/validate</td><td class="p-3">Valider la réception/livraison</td></tr>
+                                <tr><td class="p-3 font-mono">/contracts/{id}/dispute</td><td class="p-3">Signaler un litige</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Security Features -->
+                <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                    <h3 class="font-bold text-xl mb-4">Fonctionnalités de Sécurité</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-xl mr-4 mt-1">🔒</span>
+                            <div>
+                                <h4 class="font-semibold">Chiffrement de bout en bout</h4>
+                                <p class="text-sm text-slate-600">Toutes les communications sont sécurisées via TLS 1.3.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-xl mr-4 mt-1">🔑</span>
+                            <div>
+                                <h4 class="font-semibold">Authentification par Token</h4>
+                                <p class="text-sm text-slate-600">Accès aux routes sécurisé par des JSON Web Tokens (JWT) à durée de vie limitée.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-xl mr-4 mt-1">🛡️</span>
+                            <div>
+                                <h4 class="font-semibold">Vérification d'Identité (KYC)</h4>
+                                <p class="text-sm text-slate-600">Processus de validation obligatoire pour activer les transactions.</p>
+                            </div>
+                        </li>
+                         <li class="flex items-start">
+                            <span class="text-xl mr-4 mt-1">⚔️</span>
+                            <div>
+                                <h4 class="font-semibold">Protection contre les attaques</h4>
+                                <p class="text-sm text-slate-600">Mesures actives contre les injections SQL, XSS et CSRF.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Performance -->
+        <section id="performance" class="scroll-mt-24">
+            <h2 class="text-3xl font-bold mb-2 text-center">Objectifs de Performance</h2>
+            <p class="text-center text-slate-600 max-w-3xl mx-auto mb-12">
+                L'application est conçue pour être non seulement sécurisée, mais aussi rapide, fiable et capable de monter en charge pour répondre à la demande croissante du marché.
+            </p>
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                    <h3 class="font-bold text-xl mb-4">Disponibilité</h3>
+                    <div class="chart-container mx-auto" style="height:200px; max-width:200px;">
+                        <canvas id="availabilityChart"></canvas>
+                    </div>
+                    <p class="mt-4 text-2xl font-bold text-indigo-600">99.9%</p>
+                    <p class="text-sm text-slate-500">Temps de service garanti</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                    <h3 class="font-bold text-xl mb-4">Latence API</h3>
+                     <div class="chart-container mx-auto" style="height:200px; max-width:300px;">
+                        <canvas id="latencyChart"></canvas>
+                    </div>
+                    <p class="mt-4 text-2xl font-bold text-indigo-600">&lt; 500 ms</p>
+                    <p class="text-sm text-slate-500">Temps de réponse moyen</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                    <h3 class="font-bold text-xl mb-4">Scalabilité</h3>
+                     <div class="chart-container mx-auto" style="height:200px; max-width:300px;">
+                        <canvas id="scalabilityChart"></canvas>
+                    </div>
+                    <p class="mt-4 text-2xl font-bold text-indigo-600">10,000+</p>
+                    <p class="text-sm text-slate-500">Transactions par jour</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center py-8 mt-12 border-t border-slate-200">
+        <p class="text-sm text-slate-500">&copy; 2025 SecureDeal. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Tab switching logic
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('[data-content]');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabName = button.dataset.tab;
+
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('text-indigo-600', 'border-indigo-600');
+                        btn.classList.add('text-slate-500', 'border-transparent');
+                    });
+                    button.classList.add('text-indigo-600', 'border-indigo-600');
+                    button.classList.remove('text-slate-500', 'border-transparent');
+
+                    tabContents.forEach(content => {
+                        if (content.dataset.content === tabName) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            // Navigation active state on scroll
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                        });
+                    }
+                });
+            }, { rootMargin: "-50% 0px -50% 0px" });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+
+            // Chart.js Implementations
+            const indigoColor = '#4f46e5';
+            const slateColor = '#e2e8f0';
+            const textColor = '#334155';
+
+            // Availability Chart
+            const availabilityCtx = document.getElementById('availabilityChart').getContext('2d');
+            new Chart(availabilityCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Disponible', 'Indisponible'],
+                    datasets: [{
+                        data: [99.9, 0.1],
+                        backgroundColor: [indigoColor, slateColor],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false }
+                    }
+                }
+            });
+
+            // Latency Chart
+            const latencyCtx = document.getElementById('latencyChart').getContext('2d');
+            new Chart(latencyCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Latence API'],
+                    datasets: [{
+                        label: 'Latence (ms)',
+                        data: [450], // Example value under 500
+                        backgroundColor: indigoColor,
+                        borderRadius: 4,
+                        maxBarThickness: 50
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 600,
+                            grid: { display: false },
+                             ticks: { color: textColor }
+                        },
+                        y: {
+                            grid: { display: false },
+                            ticks: { display: false }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => `${context.raw} ms`
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Scalability Chart
+            const scalabilityCtx = document.getElementById('scalabilityChart').getContext('2d');
+            new Chart(scalabilityCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Transactions/jour'],
+                    datasets: [{
+                        label: 'Transactions',
+                        data: [10000],
+                        backgroundColor: indigoColor,
+                        borderRadius: 4,
+                        maxBarThickness: 50
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: (value) => `${value / 1000}k`,
+                                color: textColor
+                            }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { display: false }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                             callbacks: {
+                                label: (context) => new Intl.NumberFormat('fr-FR').format(context.raw)
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
